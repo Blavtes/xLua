@@ -81,7 +81,7 @@ The Hotfix flag can set some flags to customize the generated code and instrumen
 
 * Stateless and Stateful
 
-This is is a legacy setting. The Stateful method has been removed in the new version because similar effects can be achieved with the xlua.util.hotfix_state interface. For how to use this interface, see the sample code in HotfixTest2.cs.
+This is is a legacy setting. The Stateful method has been removed in the new version because similar effects can be achieved with the xlua.util.state interface. For how to use this interface, see the sample code in HotfixTest2.cs.
 
 Without Stateful, the default is Stateless, so there is no need to set this flag.
 
@@ -246,13 +246,11 @@ public class GenericClass<T>
 
 You can only patch GenericClass\<double\> and GenericClass\<int\>, instead of GenericClass.
 
-It is also worth mentioning that we should note the naming of generic types. For example, the name of GenericClass\<double\> is GenericClass`1[System.Double]. See [MSDN](https://msdn.microsoft.com/en-us/library/w3f99sx1.aspx) for details.
-
 The following is an example of patching GenericClass<double>:
 
 ```csharp
 luaenv.DoString(@"
-    xlua.hotfix(CS['GenericClass`1[System.Double]'], {
+    xlua.hotfix(CS.GenericClass(CS.System.Double), {
         ['.ctor'] = function(obj, a)
             print('GenericClass<double>', obj, a)
         end;

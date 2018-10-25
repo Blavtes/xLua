@@ -12,7 +12,7 @@ if exist "%VS140COMNTOOLS%" (
 call "%ENV32%"
 
 echo Swtich to x86 build env
-cd %~dp0\luajit-2.1.0b2\src
+cd %~dp0\luajit-2.1.0b3\src
 call msvcbuild_mt.bat static
 cd ..\..
 
@@ -26,6 +26,7 @@ goto :eof
 :buildxlua
 mkdir build_lj32 & pushd build_lj32
 cmake -DUSING_LUAJIT=ON -G "Visual Studio 14 2015" ..
+IF %ERRORLEVEL% NEQ 0 cmake -DUSING_LUAJIT=ON -G "Visual Studio 15 2017" ..
 popd
 cmake --build build_lj32 --config Release
 md plugin_luajit\Plugins\x86
